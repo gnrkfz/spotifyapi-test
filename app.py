@@ -64,8 +64,8 @@ def getTrack():
         offset=0,
         time_range="short_term"
     )
-    track_titles = [track['name'].replace('\u2019', "'") for track in user_top_songs['items']]
-    return track_titles
+    tracks = [f"{track['name'].replace('\u2019', "'")} - {track['artists'][0]['name'].replace('\u2019', "'")}" for track in user_top_songs['items']]
+    return tracks
 
 
 
