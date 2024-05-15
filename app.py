@@ -2,8 +2,8 @@ from flask import Flask, request, url_for, session, redirect, render_template
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-CLIENT_ID = "1ac04515e52e48a79520e730d7a609c8"
-CLIENT_SECRET = "92e9bd847c9b49a38526a7c340a67259"
+CLIENT_ID = "client-id"
+CLIENT_SECRET = "client-secret"
 SECRET_KEY = "seret-key"
 TOKEN_CODE = "token_info"
 SHORT_TERM = "short_term"
