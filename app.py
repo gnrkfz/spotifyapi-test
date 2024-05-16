@@ -1,4 +1,4 @@
-from flask import Flask, request, url_for, session, redirect, render_template
+from flask import Flask, request, url_for, session, redirect, render_template, jsonify
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
@@ -64,8 +64,15 @@ def getTrack():
         offset=0,
         time_range="short_term"
     )
-    tracks = [f"{track['name'].replace('\u2019', "'")} - {track['artists'][0]['name'].replace('\u2019', "'")}" for track in user_top_songs['items']]
-    return tracks
+    track_ids = [track['id'] for track in user_top_songs['items']]
+    recommended_tracks = []
+    for track_id in track_ids:
+        recommendations = sp.recommendations(seed_tracks=[track_id], limit=1)
+        recommended_tracks.append(f"{recommendations['tracks'][0]['name'].replace('\u2019', "'")} - {recommendations['tracks'][0]['artists'][0]['name'].replace('\u2019', "'")}")
+    return jsonify({
+        'top_tracks': tracks,
+        'recommended_tracks': recommended_tracks
+    })
 
 
 
