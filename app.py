@@ -86,6 +86,7 @@ def getTracks():
     tracks = [f"{track['name'].replace('\u2019', "'")} - {track['artists'][0]['name'].replace('\u2019', "'")}" for track in user_top_songs['items']]
     track_ids = [track['id'] for track in user_top_songs['items']]
     recommended_tracks = []
+    recommended_tracks_ids = []
     yt_links = []
     spotify_links = []
     for track_id in track_ids:
@@ -99,13 +100,16 @@ def getTracks():
         )
         recommended_track = f"{recommendations['tracks'][0]['name'].replace('\u2019', "'")} - {recommendations['tracks'][0]['artists'][0]['name'].replace('\u2019', "'")}"
         recommended_tracks.append(recommended_track)
+        recommended_tracks_ids.append(recommendations['tracks'][0]['id'])
         yt_links.append(generate_yt_link(recommended_track))
         spotify_links.append(generate_spotify_link(recommended_track))
     if os.path.exists(".cache"): 
         os.remove(".cache")
     return jsonify({
+        'access_token': token_info['access_token'],
         'top_tracks': tracks,
         'recommended_tracks': recommended_tracks,
+        'recommended_tracks_ids': recommended_tracks_ids,
         'yt_links': yt_links,
         'spotify_links': spotify_links
     })
